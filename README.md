@@ -10,7 +10,7 @@
 ### Func5:Tunner(Option)
 
 ## Workflow
-![Workflpw](resources/images/Main.jpg)
+![Workflpw](resource/images/workflow.png)
 
 ## Quick links
 
