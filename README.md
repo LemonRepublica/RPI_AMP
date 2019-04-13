@@ -16,4 +16,7 @@
 
 1) [Wiki page](https://github.com/LemonRepublica/RPI_AMP/wiki)  
 
+## Demonstration
+1) [Function Test ](https://github.com/LemonRepublica/RPI_AMP/wiki)  
+
 ![Main](resources/images/Main.jpg)
