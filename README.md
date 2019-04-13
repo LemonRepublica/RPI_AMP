@@ -1,5 +1,5 @@
 # RPI_AMP
-
+![Logo](resource/images/logo.png)
 ## Introduction  
 This is an open source real time embedded project based on raspberry 3 and progarmmed with C++.The aim of the project is that providing an intelligent,portable and extensible RPI_AMP,especiall for music-lovers.In our project ,we designed four different functions and users could choose any one on the GUI. Meanwhile, users could change the degree of the effect based on the knobs.
 
