@@ -10,6 +10,8 @@ This function can process the input music amplitude to achieve distortion. Its c
 Delay is an audio effect and an effects unit which records an input signal to an audio storage medium, and then plays it back after a period of time.  
 ![Delay](resource/images/Delay.png)
 ### Func3:Reverb
+Reverberation, in psychoacoustics and acoustics, is a persistence of sound after the sound is produced.In this function,user could change the degree of reverbertion.
+
 ### Func4:EQ
 
 
