@@ -18,7 +18,8 @@ In this project, we perform high-pass filtering and low-pass filtering on the au
 
 ## Workflow
 ![Workflpw](resource/images/workflow.png)
-
+## Gantt Chart
+![Gantt Chart](resource/images/gantt.png)
 ## Quick links
 
 1) [Wiki page](https://github.com/LemonRepublica/RPI_AMP/wiki)  
