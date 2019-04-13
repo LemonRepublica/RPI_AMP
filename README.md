@@ -3,11 +3,11 @@
 ## Introduction
 
 ## Function
-### Func1:Overdrive/Distortion
-### Func2:Noise gate
-### Func3:EQ
-### Func4:Delay/Reverb
-### Func5:Tunner(Option)
+### Func1:Distortion
+### Func2:Delay
+### Func3:Reverb
+### Func4:EQ
+
 
 ## Workflow
 ![Workflpw](resource/images/workflow.png)
