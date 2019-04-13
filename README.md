@@ -7,7 +7,8 @@ This is an open source real time embedded project based on raspberry 3 and proga
 ### Func1:Distortion
 This function can process the input music amplitude to achieve distortion. Its core algorithm is to allow a specific range of amplitudes to pass and the knob could change the range based on the requirments of user.
 ### Func2:Delay
-Delay is an audio effect and an effects unit which records an input signal to an audio storage medium, and then plays it back after a period of time. 
+Delay is an audio effect and an effects unit which records an input signal to an audio storage medium, and then plays it back after a period of time.  
+![Delay](resource/images/Delay.png)
 ### Func3:Reverb
 ### Func4:EQ
 
