@@ -5,7 +5,9 @@ This is an open source real time embedded project based on raspberry 3 and proga
 
 ## Function
 ### Func1:Distortion
+This function can process the input music amplitude to achieve distortion. Its core algorithm is to allow a specific range of amplitudes to pass and the knob could change the range based on the requirments of user.
 ### Func2:Delay
+
 ### Func3:Reverb
 ### Func4:EQ
 
