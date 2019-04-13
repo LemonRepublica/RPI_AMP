@@ -13,6 +13,7 @@ Delay is an audio effect and an effects unit which records an input signal to an
 Reverberation, in psychoacoustics and acoustics, is a persistence of sound after the sound is produced.In this function,user could change the degree of reverbertion.
 
 ### Func4:EQ
+In this project, we perform high-pass filtering and low-pass filtering on the audio simultaneously, and the filtering range is modified by the knob,which could achieve the effect of the equalizer.
 
 
 ## Workflow
