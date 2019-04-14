@@ -23,11 +23,12 @@ For the real-time EQ, Butterworth Bandstop filter is applied to change the frequ
 ![Gantt Chart](resource/images/gantt.png)
 ## Quick links
 1) [Wiki page](https://github.com/LemonRepublica/RPI_AMP/wiki)  
-2) [Vedio_Test](https://www.youtube.com/watch?v=wtC8RktlwYI)   
-3) [Vedio_Final](https://www.youtube.com/watch?v=wtC8RktlwYI)           
+2) [Hardware](https://github.com/LemonRepublica/RPI_AMP/tree/master/resource/hardware) 
+3) [Software](https://github.com/LemonRepublica/RPI_AMP/tree/master/code) 
 ## Demonstration
 1) [Function Test ](https://youtu.be/Or1FA4tJWyk)  
-2) [Function Demonstration ](https://www.youtube.com/watch?v=QiRcfnutxOk&t=1s) 
+2) [Function_Test 2](https://www.youtube.com/watch?v=wtC8RktlwYI)  
+3) [Function Demonstration Final](https://www.youtube.com/watch?v=wtC8RktlwYI) 
 
 ## Future work
 There are plenty of things that can be done to improve RPI_AMP, which could be divided into two parts ,namely,hardware and software. 
