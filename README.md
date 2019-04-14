@@ -36,4 +36,3 @@ There are plenty of things that can be done to improve RPI_AMP, which could be d
 3) The GUI might effect the speed of the program so its hard to apply the Butterworth filter because the system frequency is changing(of cause some unexpected distortion occurs). That can be improved when we get more skills about C++ or C coding. 
 
 
-![Main](resources/images/Main.jpg)
