@@ -1,4 +1,4 @@
-# RPI_AMP
+# RPI_AMP [<img src= "Media/images/youtube.jpg" width="40" height="40">](https://www.youtube.com/watch?v=QiRcfnutxOk)  
 ![Logo](resource/images/logo.png)
 ## Introduction  
 This is an open source real time embedded project based on raspberry 3 and progarmmed with C++.The aim of the project is that providing an intelligent,portable and extensible RPI_AMP,especiall for music-lovers.In our project ,we designed four different functions and users could choose any one on the GUI. Meanwhile, users could change the degree of the effect based on the knobs.
@@ -24,7 +24,7 @@ For the real-time EQ, Butterworth Bandstop filter is applied to change the frequ
 ## Quick links
 1) [Wiki page](https://github.com/LemonRepublica/RPI_AMP/wiki)  
 2) [Vedio_Test](https://www.youtube.com/watch?v=wtC8RktlwYI)  
-3) [<img src= "Media/images/youtube.jpg" width="40" height="40">](https://www.youtube.com/watch?v=QiRcfnutxOk)              
+3)             
 ## Demonstration
 1) [Function Test ](https://youtu.be/Or1FA4tJWyk)  
 2) [Function Demonstration ](https://www.youtube.com/watch?v=wtC8RktlwYI) 
