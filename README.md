@@ -2,8 +2,10 @@
 ![Logo](resource/images/logo.png)
 ## Introduction  
 This is an open source real time embedded project based on raspberry 3 and progarmmed with C++.The aim of the project is that providing an intelligent,portable and extensible RPI_AMP,especiall for music-lovers.In our project ,we designed four different functions and users could choose any one on the GUI. Meanwhile, users could change the degree of the effect based on the knobs.
+[Project Overview](https://github.com/LemonRepublica/RPI_AMP/wiki/SUMMARY)
 ## Hardware
 What this project need is a electric guitar(a acoustic guitar with pizeo pickups may also work, but not tested),two cables and a speaker(any kinds of speaker is OK). 
+[More Details](https://github.com/LemonRepublica/RPI_AMP/wiki)
 ## Electronics
 There are 3 PCBs in the RPI_AMP. 
 
