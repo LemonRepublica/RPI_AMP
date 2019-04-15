@@ -7,7 +7,7 @@ This is an open source real time embedded project based on raspberry 3 and proga
 What this project need is a electric guitar(a acoustic guitar with pizeo pickups may also work, but not tested),two cables and a speaker(any kinds of speaker is OK). 
 [More Details](https://github.com/LemonRepublica/RPI_AMP/wiki)
 ## Electronics
-There are 3 PCBs in the RPI_AMP. 
+We use MCP6002 to amplified the output signal of a guitar and transform it into digital signal by MCP3202 12 bits ADC. After processed the signal in the raspberry pi, the signal is sent to another MCP6002 in order to be played by a speaker.
 
 ## Effects
 ### Effect1:Distortion
