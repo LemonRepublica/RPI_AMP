@@ -1,5 +1,3 @@
-// CC-by-www.Electrosmash.com open-source project
-// clean.c effect pedal, the signal is read by the ADC and wAAritten again using 2 PWM sigmals. 
 
 #include <bcm2835.h>
 #include <stdio.h>
@@ -41,9 +39,8 @@ short eq_st = 0;//控制均衡（eq）功能开关
 #define NZEROS 2
 #define NPOLES 2
 long eq_gain = 0.0;
-short bass = 0;//档位控制低通滤波器（但请做成旋钮。。。假装是个旋钮，类似于0-2 -->1档，2-4 -->2档之类的）
-//short mid = 0;
-short high = 0;//同上。。。控制高通滤波器
+short bass = 0;//档位控制低通滤波器
+short high = 0;//控制高通滤波器
 long coe_bass1 = 0.0;
 long coe_bass2 = 0.0;
 //long coe_mid1 = 0.0;
@@ -77,12 +74,12 @@ int main(int argc, char **argv)
 	//define PWM	
     printf(" bbb ");
     bcm2835_gpio_fsel(18,BCM2835_GPIO_FSEL_ALT5 ); //PWM0 signal on GPIO18    
-    bcm2835_gpio_fsel(13,BCM2835_GPIO_FSEL_ALT0 ); //PWM1 signal on GPIO13    
-	bcm2835_pwm_set_clock(2); // Max clk frequency (19.2MHz/2 = 9.6MHz)
+    bcm2835_gpio_fsel(12,BCM2835_GPIO_FSEL_ALT0 ); //PWM1 signal on GPIO12    
+	bcm2835_pwm_set_clock(2); // Max clk frequency is 19.2MHz/2 = 9.6MHz
     bcm2835_pwm_set_mode(0,1 , 1); //channel 0, markspace mode, PWM enabled. 
-	bcm2835_pwm_set_range(0,64);   //channel 0, 64 is max range (6bits): 9.6MHz/64=150KHz switching PWM freq.
+	bcm2835_pwm_set_range(0,64);   //64 is for 6 bits
     bcm2835_pwm_set_mode(1, 1, 1); //channel 1, markspace mode, PWM enabled.
-	bcm2835_pwm_set_range(1,64);   //channel 0, 64 is max range (6bits): 9.6MHz/64=150KHz switching PWM freq.
+	bcm2835_pwm_set_range(1,64);   //64 is for 6 bits
 	
 	//define SPI bus configuration
     bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);      // The default
@@ -127,13 +124,7 @@ int main(int argc, char **argv)
         //printf(" ddd ");
 
     }
-	
-	//**** CLEAN EFFECT ***///
-	//Nothing to do, the input_signal goes directly to the PWM output.
-	
-	//generate output PWM signal 6 bits
-
-
+//distortion effect
     if(distortion_st==1)
     {
             if (input_signal > 1023 + distortion_gain)
@@ -142,7 +133,7 @@ int main(int argc, char **argv)
                 input_signal= 1023 - distortion_gain;
             //input_signal = input_signal;
     }
-
+//eq effect
     if(eq_st==1)
     {
         switch(bass)
@@ -220,7 +211,7 @@ int main(int argc, char **argv)
      input_signal = (int)highbuffery[2];
     }
 
-
+//delay effect
     if(delay_st==1)
     {
             Delay_Buffer[DelayCounter] = (input_signal + Delay_Buffer[DelayCounter])>>1;
@@ -233,7 +224,7 @@ int main(int argc, char **argv)
             //printf("%d\n",output_signal);
             //output_signal=input_signal;
      }
-
+//reverb effect
     if(reverb_st==1)
     {
             Reverb_Buffer1[ReverbCounter1]  = ((int)(input_signal * 0.5) + Reverb_Buffer1[ReverbCounter1])>>1;
@@ -260,12 +251,13 @@ int main(int argc, char **argv)
                           +(Reverb_Buffer3[ReverbCounter3])+ +(Reverb_Buffer4[ReverbCounter4]))>>2;
             //input_signal = (int)(input_signal/2);
     }
+//distortion output control
     if(distortion_st==1)
     {
         input_signal = input_signal * 2;
     }
 
-
+//test the outputsignal
     if (read_timer==0)
     {
         printf("out %d\n",input_signal);
