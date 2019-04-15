@@ -1,9 +1,11 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QTimer>
 #include <stdint.h>
+#include "st.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -34,6 +36,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    St st;
     QTimer *SystemTimer;
 
     uint8_t  *mosi; //12 bit ADC read 0x08 ch0, - 0c for ch1

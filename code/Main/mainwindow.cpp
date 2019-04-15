@@ -1,4 +1,4 @@
-//Overall view:
+﻿//Overall view:
 //This is a 4-effect guitar signal processer: Distortion, Delay, Reverb, EQ
 //a GUI is applied to control all the effects
 
@@ -32,16 +32,16 @@ short reverb_st = 0;//reverb on/off
 uint32_t Reverb_Depth1 = 10000;//reverb is like the delay effect,so their variable define is alike
 uint32_t Reverb_Buffer1[DELAY_MAX];
 uint32_t ReverbCounter1 = 0;
-uint32_t Reverb_Depth2 = 50000;
+uint32_t Reverb_Depth2 = 15000;
 uint32_t Reverb_Buffer2[DELAY_MAX];
 uint32_t ReverbCounter2 = 0;
-uint32_t Reverb_Depth3 = 50000;
+uint32_t Reverb_Depth3 = 15000;
 uint32_t Reverb_Buffer3[DELAY_MAX];
 uint32_t ReverbCounter3 = 0;
-uint32_t Reverb_Depth4 = 50000;
+uint32_t Reverb_Depth4 = 30000;
 uint32_t Reverb_Buffer4[DELAY_MAX];
 uint32_t ReverbCounter4 = 0;
-uint32_t Reverb_Depth5 = 50000;
+uint32_t Reverb_Depth5 = 25000;
 uint32_t Reverb_Buffer5[DELAY_MAX];
 uint32_t ReverbCounter5 = 0;//5 reverb buffers are set to simulate the reverb by apply multi echoes
 float rev = 0;//reverb time control
@@ -103,14 +103,14 @@ uint8_t MainWindow::UserInit(void)
 
     if (!bcm2835_init())
     {
-      printf("bcm2835_init failed\n");
+      printf("bcm2835_init failed. Are you running as root??\n");
       return 1;
     }
     // Start the SPI BUS.
     bcm2835_spi_begin();
 //   if (!bcm2835_spi_begin())
 //    {
-//      printf("bcm2835_spi_begin failed\n");
+//      printf("bcm2835_spi_begin failed. Are you running as root??\n");
 //      return 1;
 //    }
 
@@ -148,7 +148,7 @@ void MainWindow::UserMainLoop(void)
          {
              read_timer=0;
               qDebug()<<"MainLoop11";
-             printf("in %d\n",input_signal);
+             qDebug()<<"in"<<input_signal;
              //these data are controled by the GUI
              distortion_st =UserDistorFlag;
              delay_st =UserDelayFlag;
@@ -157,16 +157,16 @@ void MainWindow::UserMainLoop(void)
              bass = Get_BasValue();
              high = Get_HighValue();
              //high1 = (int)(high/2)+1;
-             //qDebug()<<"high"<<high;
+             //qDebug()<<"high"<<high1;
              del = Get_DelayTimeValue();
-             //qDebug()<<"del"<<del;
+            // qDebug()<<"del"<<del;
              Delay_Depth = 10000 + (int)(del * 5000);
              //transform the del_time value to the Delay_Depth, the min is 10000 sequences, the max is 60000
              //qDebug()<<"Delay_Depth"<<Delay_Depth;
              //qDebug()<<"dis"<<dis;
-             distortion_gain = 500 + (int)(dis * 50);
+             distortion_gain = 100 + (int)(dis * 50);
              //transform distortion level value to distortion_gain
-             qDebug()<<"distortion_gain"<<distortion_gain;
+             //qDebug()<<"distortion_gain"<<distortion_gain;
              del_lev = Get_DelayLeverValue();
              if (del_lev>11)
                  del_lev = 0;
@@ -174,173 +174,49 @@ void MainWindow::UserMainLoop(void)
              rev = rev;
              //qDebug()<<"rev"<<rev;
              rev = Get_ReverbLevelValue();
-             qDebug()<<"rev"<<rev;
+             //qDebug()<<"rev"<<rev;
              //like the Dealy effect
-             Reverb_Depth1 = 10000 + rev * 5000;
-             Reverb_Depth2 = 30000 + rev * 5000;
-             Reverb_Depth3 = 50000 + rev * 5000;
-             Reverb_Depth4 = 30000 + rev * 5000;
+             Reverb_Depth1 = 10000 + rev * 3000;
+             Reverb_Depth2 = 30000 + rev * 6000;
+             Reverb_Depth3 = 20000 + rev * 3000;
+             Reverb_Depth4 = 15000 + rev * 2000;
              Reverb_Depth5 = 20000 + rev * 5000;
              //printf(" ddd ");
              countt++;
              qDebug()<<"Count"<<countt;
          }
 
-         //distortion is set the value that above or below the thresholds to the threshold itself
-         if(distortion_st)
-         {
-             if (read_timer==0)
-             {
-             qDebug()<<"DistorLoop";
-             }
-           if (input_signal > 2047 + distortion_gain)
-               input_signal= 2047 + distortion_gain;
-           if (input_signal < 2047 - distortion_gain)
-               input_signal= 2047 - distortion_gain;
+         if(distortion_st){
+             st.distortion_st(read_timer, distortion_gain, input_signal);
          }
-         //eq is use butterworth bandstop filter to cut down some of the frequencies to modle the tone
-         if(eq_st)
-         {
-             if (read_timer==0)
-             {
-             qDebug()<<"EQ Loop";
-             qDebug()<<"bass"<<bass;
-             qDebug()<<"high"<<high;
-             }
-              if (bass<=2)
-               {
-                  //1000-15000Hz
-                  coe1 = -0.1742373434;
-                  coe2 =  0.4242847127;
-                  coe3 = -1.1742373434;
-                  coe4 =  1.9113247840;
-                  coe5 =  -3.6016161772;
-                  coe6 =   5.2429097719;
-                  eq_gain = 3.084091054e+00;
-                }
-              else if (bass<=4)
-               {
-                  //2500-12500Hz
-                  coe1 = -0.3981522939;
-                  coe2 =  1.8048015305;
-                  coe3 = -3.3585222750;
-                  coe4 =  2.9448662203;
-                  coe5 =  -3.7885487581;
-                  coe6 =   5.5882754232;
-                  eq_gain = 1.595290011e+00;
-               }
-               else if (bass<=6)
-               {
-                   //2500-12500Hz
-                   coe1 = -0.3981522939;
-                   coe2 =  1.8048015305;
-                   coe3 = -3.3585222750;
-                   coe4 =  2.9448662203;
-                   coe5 =  -3.7885487581;
-                   coe6 =   5.5882754232;
-                   eq_gain = 1.595290011e+00;
-              }
-               else if (bass<=8)
-                   {
-                   //250-5000Hz
-                   coe1 = -0.4954364568;
-                   coe2 =  2.2889737155;
-                   coe3 = -4.0847207924;
-                   coe4 =  3.2910462235;
-                   coe5 =  -3.9720369081;
-                   coe6 =   5.9442692998;
-                   eq_gain = 1.423664055e+00;
-                  }
-              else
-               {
-               //150-1500Hz
-                   coe1 = -0.9048692656;
-                   coe2 =  3.7087063213;
-                   coe3 = -5.7027465052;
-                   coe4 =  3.8989090873;
-                   coe5 =  -3.9987658490;
-                   coe6 =   5.9975320787;
-                   eq_gain = 1.051253417e+00;
-                 }
-            //qDebug()<<"basssss";
-               bufferx[0] = bufferx[1];
-               bufferx[1] = bufferx[2];
-               bufferx[2] = bufferx[3];
-               bufferx[3] = bufferx[4];
-               bufferx[4] = input_signal/eq_gain;
-               buffery[0] = buffery[1];
-               buffery[1] = buffery[2];
-               buffery[2] = buffery[3];
-               buffery[3] = buffery[4];
-               buffery[4] = (bufferx[0] + bufferx[4])
-                       + coe5 * (bufferx[1] + bufferx[3]) + coe6 * bufferx[2]
-                       + (coe1 * buffery[0]) + (coe2 * buffery[1])
-                       + (coe3 * buffery[2]) + (coe4 * buffery[3]);
-               input_signal = (int)(buffery[4]*((high * 0.1)+0.5));
+         //qDebug()<<"in"<<input_signal;
 
+         if(eq_st){
+             st.eq_st(read_timer, bass, coe1, coe2, coe3, coe4, coe5, coe6,
+                      eq_gain, input_signal, high, bufferx, buffery);
+         //qDebug()<<"in"<<input_signal;
          }
-         //delay is put the former signal into a buffer and then send out with current signal together
-         if(delay_st)
-         {
-             if (read_timer==0)
-             {
-           qDebug()<<"DelayLoop";
-             }
-           //Delay Loop is Here
-           Delay_Buffer[DelayCounter] = input_signal + Delay_Buffer[DelayCounter]>>1;
-   //        Delay_Buffer[DelayCounter] = input_signal;
-           DelayCounter++;
-           if(DelayCounter >= Delay_Depth)
-               DelayCounter = 0;
-           input_signal = (int)(Delay_Buffer[DelayCounter]* ((del_lev * 0.1)+0.5))+input_signal>>1;
-           //input_signal = (int)(input_signal/2);
-           //printf("%d\n",output_signal);
-           //output_signal=input_signal;
+         if (read_timer==0){
+             qDebug()<<"eqLoop1"<<input_signal;
          }
-         //reverb is simulate the sound effect in a crave or hall.
-         //The complex topography makes complex echoes
-         //so apply irregular echoes to reach reverb effect
-         if(reverb_st)
-         {
-             if (read_timer==0)
-             {
-           qDebug()<<"ReverLoop";
-             }
-           Reverb_Buffer1[ReverbCounter1]  = (input_signal + Reverb_Buffer1[ReverbCounter1])>>1;
-           Reverb_Buffer2[ReverbCounter2]  = (input_signal + Reverb_Buffer2[ReverbCounter2])>>1;
-           Reverb_Buffer3[ReverbCounter3]  = (input_signal + Reverb_Buffer3[ReverbCounter3])>>1;
-           Reverb_Buffer4[ReverbCounter4]  = (input_signal + Reverb_Buffer4[ReverbCounter4])>>1;
-           Reverb_Buffer5[ReverbCounter5]  = (input_signal + Reverb_Buffer5[ReverbCounter5])>>1;
 
+         if(delay_st){
+             st.delay_st(read_timer,    Delay_Buffer,   DelayCounter,
+                         input_signal,  Delay_Depth,    del_lev);
+         }
 
-           ReverbCounter1++;
-           if(ReverbCounter1 >= Reverb_Depth1)
-               ReverbCounter1 = 0;
-           ReverbCounter2++;
-           if(ReverbCounter2 >= Reverb_Depth2)
-               ReverbCounter2 = 0;
-
-           ReverbCounter3++;
-           if(ReverbCounter3 >= Reverb_Depth3)
-               ReverbCounter3 = 0;
-           ReverbCounter4++;
-           if(ReverbCounter4 >= Reverb_Depth4)
-               ReverbCounter4 = 0;
-           ReverbCounter5++;
-           if(ReverbCounter5 >= Reverb_Depth5)
-               ReverbCounter5 = 0;
-
-           input_signal=(int)(input_signal + ((Reverb_Buffer1[ReverbCounter1]) * 0.7) +((Reverb_Buffer2[ReverbCounter2]) * 0.7)
-                         +((Reverb_Buffer3[ReverbCounter3] * 0.7))+((Reverb_Buffer4[ReverbCounter4] * 0.7))+((Reverb_Buffer5[ReverbCounter5] * 0.7)))>>2;
-           //input_signal = (int)(input_signal * 1.5);
+         if(reverb_st){
+             st.reverb_st(read_timer,       Reverb_Buffer1, ReverbCounter1, Reverb_Buffer2,
+                          ReverbCounter2,   Reverb_Buffer3, ReverbCounter3, Reverb_Buffer4,
+                          ReverbCounter4,   Reverb_Buffer5, ReverbCounter5, input_signal,
+                          Reverb_Depth1,    Reverb_Depth2,  Reverb_Depth3,  Reverb_Depth4,
+                          Reverb_Depth5);
 
          }
 
-         //in analog circuit, distortion happens when the input is too load.
-         //However in digital processer,we get distortion by get the value to the threshold
-         //so sometimes the sound becomes quiter,so boost the distortioned value
 
-         if(distortion_st==1)
+
+         if(distortion_st||reverb_st==1)
          {
              input_signal = (int)(input_signal * 1.5);
          }
@@ -348,7 +224,7 @@ void MainWindow::UserMainLoop(void)
         //see the output signal
          if (read_timer==0)
          {
-             printf("out %d\n",input_signal);
+             qDebug()<<"out"<<input_signal;
          }
 
          output_signal = input_signal;
