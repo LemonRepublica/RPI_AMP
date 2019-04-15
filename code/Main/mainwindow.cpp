@@ -103,14 +103,14 @@ uint8_t MainWindow::UserInit(void)
 
     if (!bcm2835_init())
     {
-      printf("bcm2835_init failed. Are you running as root??\n");
+      printf("bcm2835_init failed\n");
       return 1;
     }
     // Start the SPI BUS.
     bcm2835_spi_begin();
 //   if (!bcm2835_spi_begin())
 //    {
-//      printf("bcm2835_spi_begin failed. Are you running as root??\n");
+//      printf("bcm2835_spi_begin failed\n");
 //      return 1;
 //    }
 
@@ -157,16 +157,16 @@ void MainWindow::UserMainLoop(void)
              bass = Get_BasValue();
              high = Get_HighValue();
              //high1 = (int)(high/2)+1;
-             //qDebug()<<"high"<<high1;
+             //qDebug()<<"high"<<high;
              del = Get_DelayTimeValue();
-            // qDebug()<<"del"<<del;
+             //qDebug()<<"del"<<del;
              Delay_Depth = 10000 + (int)(del * 5000);
              //transform the del_time value to the Delay_Depth, the min is 10000 sequences, the max is 60000
              //qDebug()<<"Delay_Depth"<<Delay_Depth;
              //qDebug()<<"dis"<<dis;
              distortion_gain = 500 + (int)(dis * 50);
              //transform distortion level value to distortion_gain
-             //qDebug()<<"distortion_gain"<<distortion_gain;
+             qDebug()<<"distortion_gain"<<distortion_gain;
              del_lev = Get_DelayLeverValue();
              if (del_lev>11)
                  del_lev = 0;
@@ -174,7 +174,7 @@ void MainWindow::UserMainLoop(void)
              rev = rev;
              //qDebug()<<"rev"<<rev;
              rev = Get_ReverbLevelValue();
-             //qDebug()<<"rev"<<rev;
+             qDebug()<<"rev"<<rev;
              //like the Dealy effect
              Reverb_Depth1 = 10000 + rev * 5000;
              Reverb_Depth2 = 30000 + rev * 5000;
